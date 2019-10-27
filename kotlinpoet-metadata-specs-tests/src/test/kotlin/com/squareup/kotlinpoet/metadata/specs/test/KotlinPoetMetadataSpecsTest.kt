@@ -1770,6 +1770,15 @@ class KotlinPoetMetadataSpecsTest : MultiClassInspectorTest() {
     class AssetOut<out B : AssetOut<B>>
     class AssetIn<in C : AssetIn<C>>
   }
+
+  @Test
+  fun internalAbstractProperty() {
+    val typeSpec = InternalAbstractPropertyHolder::class.toTypeSpecWithTestHandler()
+  }
+
+  abstract class InternalAbstractPropertyHolder {
+    internal abstract val test2: String
+  }
 }
 
 class ClassNesting {
