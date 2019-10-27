@@ -130,6 +130,33 @@ class KotlinPoetMetadataSpecsTest : MultiClassInspectorTest() {
   }
 
   @Test
+  fun abstractClass() {
+    val typeSpec = AbstractClass::class.toTypeSpecWithTestHandler()
+
+    //language=kotlin
+    assertThat(typeSpec.trimmedToString()).isEqualTo("""
+      abstract class AbstractClass {
+        val baz: kotlin.String = throw NotImplementedError("Stub!")
+        
+        abstract val foo: kotlin.String
+
+        abstract fun bar()
+        
+        fun fuz() {
+        } 
+      }
+    """.trimIndent())
+  }
+
+  abstract class AbstractClass {
+    abstract val foo: String
+    abstract fun bar()
+
+    val baz: String = ""
+    fun fuz() {}
+  }
+
+  @Test
   fun companionObject() {
     val typeSpec = CompanionObject::class.toTypeSpecWithTestHandler()
     //language=kotlin
