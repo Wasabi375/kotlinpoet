@@ -675,13 +675,15 @@ private fun ImmutableKmProperty.toPropertySpec(
         // Delegated properties have setters/getters defined for some reason, ignore here
         // since the delegate handles it
         // vals with initialized constants have a getter in bytecode but not a body in kotlin source
-        val modifierSet = modifiers.toSet()
-        if (hasGetter && !isDelegated) {
-          propertyAccessor(modifierSet, getterFlags,
-              FunSpec.getterBuilder().addStatement(NOT_IMPLEMENTED), isOverride)?.let(::getter)
-        }
-        if (hasSetter && !isDelegated) {
-          propertyAccessor(modifierSet, setterFlags, FunSpec.setterBuilder(), isOverride)?.let(::setter)
+        if(!isAbstract) {
+          val modifierSet = modifiers.toSet()
+          if (hasGetter && !isDelegated) {
+              propertyAccessor(modifierSet, getterFlags,
+                      FunSpec.getterBuilder().addStatement(NOT_IMPLEMENTED), isOverride)?.let(::getter)
+          }
+          if (hasSetter && !isDelegated) {
+              propertyAccessor(modifierSet, setterFlags, FunSpec.setterBuilder(), isOverride)?.let(::setter)
+          }
         }
       }
       .tag(this)

@@ -1774,10 +1774,17 @@ class KotlinPoetMetadataSpecsTest : MultiClassInspectorTest() {
   @Test
   fun internalAbstractProperty() {
     val typeSpec = InternalAbstractPropertyHolder::class.toTypeSpecWithTestHandler()
+    //language=kotlin
+    assertThat(typeSpec.trimmedToString()).isEqualTo("""
+      abstract class InternalAbstractPropertyHolder {
+        internal abstract val test: kotlin.String
+      }
+      """.trimIndent()
+    )
   }
 
   abstract class InternalAbstractPropertyHolder {
-    internal abstract val test2: String
+    internal abstract val test: String
   }
 }
 
